@@ -1,6 +1,64 @@
 let recipeLibrary = []
 let groceryList = [];
 
+recipeLibrary = [
+    {
+        "name": "scrambled eggs",
+        "ingredients": [
+            {
+                "ingredient": "eggs",
+                "amount": "1",
+                "measurement": "whole"
+            },
+            {
+                "ingredient": "pepper",
+                "amount": "1",
+                "measurement": "tsp"
+            },
+            {
+                "ingredient": "salt",
+                "amount": "1",
+                "measurement": "tsp"
+            },
+            {
+                "ingredient": "oil",
+                "amount": "1",
+                "measurement": "tbsp"
+            }
+        ],
+        "steps": [
+            "cook"
+        ]
+    },
+    {
+        "name": "omellete",
+        "ingredients": [
+            {
+                "ingredient": "eggs",
+                "amount": "5",
+                "measurement": "whole"
+            },
+            {
+                "ingredient": "pepper",
+                "amount": "2",
+                "measurement": "tsp"
+            },
+            {
+                "ingredient": "salt",
+                "amount": "3",
+                "measurement": "tsp"
+            },
+            {
+                "ingredient": "bacon",
+                "amount": "4",
+                "measurement": "stripfdsfdsfs"
+            }
+        ],
+        "steps": [
+            "cook"
+        ]
+    }
+]
 
 
 //Save recipes and grocerys to local storage
@@ -8,14 +66,25 @@ function saveToLocalStorage() {
 
     let tempRecipeLibrary = JSON.stringify(recipeLibrary)
     localStorage.setItem('recipeLibrary', tempRecipeLibrary)
+    let tempGroceryList = JSON.stringify(groceryList)
+    localStorage.setItem('groceryList', tempGroceryList)
 
 }
+
+//load and set display of recipes and selected groceries
 function onStart() {
     let tempRecipeLibrary = localStorage.getItem('recipeLibrary')
     tempRecipeLibrary = JSON.parse(tempRecipeLibrary)
-    if (tempRecipeLibrary == null) return;
+    if (tempRecipeLibrary == null && recipeLibrary == undefined) return;
     recipeLibrary = tempRecipeLibrary
     onStartRecipeToList()
+
+    let tempGroceryList = localStorage.getItem('groceryList')
+    tempGroceryList = JSON.parse(tempGroceryList)
+    if (tempGroceryList == null) return;
+    groceryList = tempGroceryList
+    setSelectedRecipe()
+    setGroceryHTML()
 }
 
 class Recipe {
@@ -164,6 +233,7 @@ recipeForm.addEventListener('formdata', (e) => {
     recipeLibrary.push(newRecipe)
     recipeListHTML.appendChild(createObjtoList(newRecipe))
 
+
 })
 
 //create inset carousel ############################
@@ -195,6 +265,7 @@ function createObjtoList(item) {
 
     let addToGrocery = document.createElement('button')
     addToGrocery.textContent = '+'
+    addToGrocery.classList = 'add-grocery-button'
 
     addToGrocery.addEventListener('click', () => {
         let temp = addToGrocery.parentElement.children
@@ -204,6 +275,9 @@ function createObjtoList(item) {
         })
         console.log(elemIndex)
         groceryList.push(recipeLibrary[elemIndex])
+        setGroceryHTML()
+        setSelectedRecipe()
+
 
     })
 
@@ -338,6 +412,7 @@ const groupBy = (items, key) => items.reduce(
 
 
 
+
 function combineGroceryItems() {
     const recipeLists = new Array
     for (let i=0; i< groceryList.length; i++) {
@@ -350,9 +425,13 @@ function combineGroceryItems() {
     const _temp = Object.values(combinedList)
     const _finalList = []
     for (let i=0; i<_temp.length; i++) {
-        let _listObj = _temp[i][0];
-        for (let j=1; j<_temp[i].length; j++) {
-            _listObj.amount = Number(_listObj.amount) + Number(_temp[i][j].amount)
+        let _listObj = {}
+        _listObj.ingredient = _temp[i][0].ingredient;
+        _listObj.amount = 0
+        _listObj.measurement = _temp[i][0].measurement;
+        
+        for (let j=0; j<_temp[i].length; j++) {
+            _listObj.amount += Number(_temp[i][j].amount)
         }
         _finalList.push(_listObj)
     }
@@ -360,10 +439,95 @@ function combineGroceryItems() {
 
 }
 
-//add list of groceries to bottom
-//add list of selected recipes to top
+//add list of groceries to bottom in section
+
+
+function createGroceryHTML(item) {
+    let _container = document.createElement('li')
+    //to track each item, needed for deletion button must be first child
+    //must be right after containerID
+
+    let ingrName = document.createElement('span')
+    ingrName.classList = 'ingr-name'
+    ingrName.textContent = item.ingredient
+
+    let ingrAmnt = document.createElement('span')
+    ingrAmnt.classList = 'ingr-amnt'
+    ingrAmnt.textContent = item.amount
+
+    let ingrMsr = document.createElement('span')
+    ingrMsr.classList = 'ingr-msr'
+    ingrMsr.textContent = item.measurement
+    
+    _container.appendChild(ingrName)
+    _container.appendChild(ingrAmnt)
+    _container.appendChild(ingrMsr)
+
+    return _container
+}
+
+function setGroceryHTML() {
+    let section = document.querySelector('section.grocery-list')
+    while (section.firstChild) {
+        section.removeChild(section.lastChild)
+    }
+    let sectionHeader = document.createElement('h2')
+    sectionHeader.textContent = 'Groceries'
+    section.appendChild(sectionHeader)
+    
+    let _groceryHTMLList = document.createElement('ul')
+    section.appendChild(_groceryHTMLList)
+    let tempArray = combineGroceryItems()
+    for (let i=0;i<tempArray.length;i++) {
+        _groceryHTMLList.appendChild(createGroceryHTML(tempArray[i]))
+    }
+}
+
+//add list of selected recipes to top above recipes
+
+function setSelectedRecipe() {
+    let section = document.querySelector('section.selected-recipes')
+    while (section.firstChild) {
+        section.removeChild(section.lastChild)
+    }
+    let sectionHeader = document.createElement('h2')
+    sectionHeader.textContent = 'Selected'
+    section.appendChild(sectionHeader)
+
+    let _selectedList = document.createElement('ul')
+    section.appendChild(_selectedList)
+
+    for (let i = 0; i<groceryList.length; i++) {
+        let selectedItem = document.createElement('div')
+        selectedItem.textContent = groceryList[i].name
+        _selectedList.appendChild(selectedItem)
+
+        let removeButton = document.createElement('button')
+        removeButton.textContent = 'x'
+        removeButton.addEventListener('click', () => {
+            let temp = removeButton.parentElement.children
+
+            let elemIndex = groceryList.findIndex((el) => {
+                return el.name == temp[1].textContent
+            })
+            groceryList.splice(elemIndex)
+            removeButton.parentElement.remove()
+        })
+        _selectedList.appendChild(removeButton)
+    }
+}
+
+
+
 //add save button or move save function to form submit
 
+let formSaveSection = document.querySelector('section.add-recipe')
+let saveChangesButton = document.createElement('button')
+saveChangesButton.textContent = 'Save Changes'
+saveChangesButton.addEventListener('click', () => {
+    saveToLocalStorage()
+})
+formSaveSection.appendChild(saveChangesButton)
 
  
 onStart()
