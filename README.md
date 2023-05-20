@@ -7,10 +7,10 @@ phase 1.0.0
     and can add them to a grocery list which adds up all the ingredients required for your recipes.
 
 phase 1.0.1
-    form input cleaned&&fancied up (button to add ingredients, list of known ingredients, defined units, unit conversion)
+    modularize with webpack and dont break anything
 
 phase 1.0.2
-    modularize with webpack and dont break anything
+    form input cleaned&&fancied up (button to add ingredients, list of known ingredients, defined units, unit conversion)
 
 phase 1.0.3
     make it look nice, mobile first

@@ -1,63 +1,63 @@
-let recipeLibrary = []
+let recipeLibrary = [{
+    name: "scrambled eggs",
+    ingredients: [
+        {
+            ingredient: "eggs",
+            amount: "1",
+            measurement: "whole"
+        },
+        {
+            ingredient: "pepper",
+            amount: "1",
+            measurement: "tsp"
+        },
+        {
+            ingredient: "salt",
+            amount: "1",
+            measurement: "tsp"
+        },
+        {
+            ingredient: "oil",
+            amount: "1",
+            measurement: "tbsp"
+        }
+    ],
+    steps: [
+        "cook"
+    ]
+},
+{
+    name: "omellete",
+    ingredients: [
+        {
+            ingredient: "eggs",
+            amount: "5",
+            measurement: "whole"
+        },
+        {
+            ingredient: "pepper",
+            amount: "2",
+            measurement: "tsp"
+        },
+        {
+            ingredient: "salt",
+            amount: "3",
+            measurement: "tsp"
+        },
+        {
+            ingredient: "bacon",
+            amount: "4",
+            measurement: "stripfdsfdsfs"
+        }
+    ],
+    steps: [
+        "cook"
+    ]
+}]
 let groceryList = [];
 
 recipeLibrary = [
-    {
-        "name": "scrambled eggs",
-        "ingredients": [
-            {
-                "ingredient": "eggs",
-                "amount": "1",
-                "measurement": "whole"
-            },
-            {
-                "ingredient": "pepper",
-                "amount": "1",
-                "measurement": "tsp"
-            },
-            {
-                "ingredient": "salt",
-                "amount": "1",
-                "measurement": "tsp"
-            },
-            {
-                "ingredient": "oil",
-                "amount": "1",
-                "measurement": "tbsp"
-            }
-        ],
-        "steps": [
-            "cook"
-        ]
-    },
-    {
-        "name": "omellete",
-        "ingredients": [
-            {
-                "ingredient": "eggs",
-                "amount": "5",
-                "measurement": "whole"
-            },
-            {
-                "ingredient": "pepper",
-                "amount": "2",
-                "measurement": "tsp"
-            },
-            {
-                "ingredient": "salt",
-                "amount": "3",
-                "measurement": "tsp"
-            },
-            {
-                "ingredient": "bacon",
-                "amount": "4",
-                "measurement": "stripfdsfdsfs"
-            }
-        ],
-        "steps": [
-            "cook"
-        ]
-    }
+   
 ]
 
 
@@ -65,7 +65,7 @@ recipeLibrary = [
 function saveToLocalStorage() {
 
     let tempRecipeLibrary = JSON.stringify(recipeLibrary)
-    localStorage.setItem('recipeLibrary', tempRecipeLibrary)
+    localStorage.setItem('JSONrecipeLibrary', tempRecipeLibrary)
     let tempGroceryList = JSON.stringify(groceryList)
     localStorage.setItem('groceryList', tempGroceryList)
 
@@ -73,10 +73,69 @@ function saveToLocalStorage() {
 
 //load and set display of recipes and selected groceries
 function onStart() {
-    let tempRecipeLibrary = localStorage.getItem('recipeLibrary')
+    let tempRecipeLibrary = localStorage.getItem('JSONrecipeLibrary')
     tempRecipeLibrary = JSON.parse(tempRecipeLibrary)
-    if (tempRecipeLibrary == null && recipeLibrary == undefined) return;
+    if (tempRecipeLibrary == undefined) {
+        recipeLibrary = [{
+            name: "scrambled eggs",
+            ingredients: [
+                {
+                    ingredient: "eggs",
+                    amount: "1",
+                    measurement: "whole"
+                },
+                {
+                    ingredient: "pepper",
+                    amount: "1",
+                    measurement: "tsp"
+                },
+                {
+                    ingredient: "salt",
+                    amount: "1",
+                    measurement: "tsp"
+                },
+                {
+                    ingredient: "oil",
+                    amount: "1",
+                    measurement: "tbsp"
+                }
+            ],
+            steps: [
+                "cook"
+            ]
+        },
+        {
+            name: "omellete",
+            ingredients: [
+                {
+                    ingredient: "eggs",
+                    amount: "5",
+                    measurement: "whole"
+                },
+                {
+                    ingredient: "pepper",
+                    amount: "2",
+                    measurement: "tsp"
+                },
+                {
+                    ingredient: "salt",
+                    amount: "3",
+                    measurement: "tsp"
+                },
+                {
+                    ingredient: "bacon",
+                    amount: "4",
+                    measurement: "stripfdsfdsfs"
+                }
+            ],
+            steps: [
+                "cook"
+            ]
+        }]
+        
+    } else {
     recipeLibrary = tempRecipeLibrary
+    }
     onStartRecipeToList()
 
     let tempGroceryList = localStorage.getItem('groceryList')
