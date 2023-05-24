@@ -19,7 +19,7 @@ header {
     color: inherit;
 }
 
-.container {
+/* .container {
     display: flex;
     gap: 2rem;
     justify-content: center;
@@ -55,7 +55,7 @@ form > * > textarea {
     overflow-y: auto;
     word-wrap: break-word;
 
-}
+} */
 
 .hide-block {
     display: none;
