@@ -2,11 +2,11 @@
 a webapp to list different recipes, and allows you to create a grocery list based off of chosen recipes.
 
 roadmap: 
-phase 1.0.0
+phase 0.0.1
     can add/remove recipes, can see information about each recipe,
     and can add them to a grocery list which adds up all the ingredients required for your recipes.
 
-phase 1.0.1
+phase 1.0.0
     modularize with webpack and dont break anything
 
 phase 1.0.2
