@@ -62,7 +62,7 @@ export const recipeLibrary = {
         // recipeForm = recipeForm
         this.render() //create Recipes List HTML
         // recipeHTML = recipeHTML
-        recipeForm.recipeForm.addEventListener('formdata', formHandler) //add response to library and updateHTML on submit
+        recipeForm.form.addEventListener('formdata', formHandler) //add response to library and updateHTML on submit
 
     },
 
