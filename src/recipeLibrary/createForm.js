@@ -1,3 +1,7 @@
+//import ingr list
+//import msr units
+
+
 export const createForm = {
     //create form, input for Name, Ingredients([ingredient, amount, msrmnt]), Steps ([1,2,3])
     recipeForm: document.createElement('form'),
@@ -9,11 +13,17 @@ export const createForm = {
     createForm: function() {
         this.recipeForm.appendChild(this.addName())
 
-        this.recipeForm.appendChild(this.ingrList)
-        this.ingrList.appendChild(this.addIngredients())
+        this.ingrCont = document.createElement('div')
+        //put appends in own function
+        this.appendIngr(this.ingrCont)
+        this.recipeForm.appendChild(this.ingrCont)
 
-        this.recipeForm.appendChild(this.stepsList)
-        this.stepsList.appendChild(this.addSteps())
+
+
+        this.stepsCont = document.createElement('div')
+        //put appends in own function
+        this.appendSteps(this.stepsCont)
+        this.recipeForm.appendChild(this.stepsCont)
 
         this.recipeForm.appendChild(this.addSubmitBtn())
 
@@ -23,6 +33,21 @@ export const createForm = {
     //end function
     
     },
+
+    appendSteps: function(container) {
+
+        container.appendChild(this.stepsList)
+            this.stepsList.appendChild(this.addSteps())
+        container.appendChild(this.dupInpBtn(this.addSteps(), this.stepsList))
+
+    },
+
+    appendIngr: function(container) {
+    container.appendChild(this.ingrList)
+        this.ingrList.appendChild(this.addIngredients())
+    container.appendChild(this.dupInpBtn(this.addIngredients(), this.ingrList))   
+    },
+
 
     addName: function() {
         let div = document.createElement('div')
@@ -39,11 +64,19 @@ export const createForm = {
     addIngredients: function() {
         let li = document.createElement('li')
 
-        this.labelIngr = this.createFormLabel('ingredients', 'Ingredients')
-        li.appendChild(this.labelIngr)
+        let labelIngr = this.createFormLabel('ingredients', 'Ingredients')
+        li.appendChild(labelIngr)
 
-        this.ingrInput = this.createIngrInput()
-        li.appendChild(this.ingrInput)
+        let ingrName = this.createIngrNameInput()
+        li.appendChild(ingrName)
+
+        let ingrInput = this.createIngrValInput()
+        li.appendChild(ingrInput)
+
+
+
+        let ingrMsr = this.createIngrMsrInput()
+        li.appendChild(ingrMsr)
 
         return li  
     },
@@ -52,11 +85,11 @@ export const createForm = {
 
         let li = document.createElement('li')
          
-        this.stepsLabel = this.createFormLabel('steps', 'Steps')
-        li.appendChild(this.stepsLabel)
+        let stepsLabel = this.createFormLabel('steps', 'Steps')
+        li.appendChild(stepsLabel)
 
-        this.inputStep = this.createStepsInput()
-        li.appendChild(this.inputStep)
+        let inputStep = this.createStepsInput()
+        li.appendChild(inputStep)
 
         return li
     },
@@ -88,15 +121,68 @@ export const createForm = {
     },
  
 
-    createIngrInput: () => {
+    createIngrValInput: () => {
         let _ingrInput = document.createElement('input')
         _ingrInput.setAttribute('type', 'number')
-        _ingrInput.setAttribute('class', 'inputIngredient')
+        _ingrInput.classlist = 'inputIngredient inputVal'
         _ingrInput.setAttribute('name', 'ingredients')
         _ingrInput.setAttribute('maxValue', '99')
         _ingrInput.setAttribute('minValue', '1')
         _ingrInput.required = true
         return _ingrInput
+    },
+
+
+    createOption: function(value) {
+
+              let temp = document.createElement('option')
+              temp.setAttribute('value', value)
+              temp.textContent = value
+              return temp
+  
+    },
+
+    createIngrNameInput: function() {
+        //look for above input for guidance
+        let _ingrInput = document.createElement('select')
+        _ingrInput.classlist = 'inputIngredient inputName'
+
+        _ingrInput.setAttribute('name', 'ingredients')
+        _ingrInput.required = true
+        console.log(this)
+        _ingrInput.appendChild(this.createOption('eggs'))
+        _ingrInput.appendChild(this.createOption('milk'))
+
+        return _ingrInput
+    },
+
+
+    createIngrMsrInput: function() {
+        let _ingrInput = document.createElement('select')
+        _ingrInput.classlist = 'inputIngredient inputMsr'
+        _ingrInput.setAttribute('name', 'ingredients')
+        _ingrInput.required = true
+
+        
+        _ingrInput.appendChild(this.createOption('cup'))
+        _ingrInput.appendChild(this.createOption('tbsp'))
+
+        return _ingrInput
+    },
+
+    dupInpBtn: function(dupInp, inpCont) {
+        //might need input arg
+        let temp = document.createElement('button')
+        temp.type = 'button'
+        temp.addEventListener('click', () => {
+            console.log(inpCont)
+            console.log(dupInp)
+            //counter to change name of inputs?
+            //need change name of inputs anyway
+            
+            inpCont.appendChild(dupInp)
+        })
+        return temp
     },
 
 
