@@ -1,11 +1,11 @@
 import './styles.css';
-import { HTMLSkeleton } from './createHTMLSkel';
+import { HTMLSkeleton } from './utils/createHTMLSkel';
 
 HTMLSkeleton.init()
 
-import { recipeLibrary } from './recipeLibrary';
-import { selectedRecipes } from './selectedRecipes';
-import { groceryList } from './groceryList';
+import { recipeLibrary } from './recipeLibrary/recipeLibrary';
+import { selectedRecipes } from './selectedRecipes/selectedRecipes';
+import { groceryList } from './groceryList/groceryList';
 
 
 
@@ -17,50 +17,6 @@ function onStart() {
 }
 
 window.addEventListener('load', onStart)
-
-//////////////////
-// END REFACTOR //
-//////////////////
-
-
-
-
-            //Save el to local storage
-           
-
-
-
-//load and set display of recipes and selected groceries
-// function onStart(recipeLibrary, groceryList) {
-//     let tempRecipeLibrary = localStorage.getItem('JSONrecipeLibrary')
-//     tempRecipeLibrary = JSON.parse(tempRecipeLibrary)
-//     if (tempRecipeLibrary == undefined) {
-//         
-        
-//     } else {
-//     recipeLibrary = tempRecipeLibrary
-//     }
-//     onStartRecipeToList(recipeLibrary, recipeListHTML)
-
-//     let tempGroceryList = localStorage.getItem('groceryList')
-//     tempGroceryList = JSON.parse(tempGroceryList)
-//     if (tempGroceryList == null) return;
-//     groceryList = tempGroceryList
-//     setSelectedRecipe()
-//     let grocerySection = document.querySelector('section.grocery-list')
-//         grocerySection.appendChild(setGroceryHTML('grocery-list'));
-// }
-
-
-
-                    
-
-
-
-//                             //adjust form textareas to be responsive
-
-                            
-
 
 
 

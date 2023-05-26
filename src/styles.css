@@ -19,6 +19,16 @@ header {
     color: inherit;
 }
 
+.remove-selected-recipe {
+    width: 1rem;
+    height: 1rem;
+    display: relative;
+}
+/* .remove-selected-recipe::after {
+    display: absolute;
+    content: 'x'
+} */
+
 /* .container {
     display: flex;
     gap: 2rem;

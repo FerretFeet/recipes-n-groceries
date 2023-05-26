@@ -1,7 +1,7 @@
-import { HTMLSkeleton } from './createHTMLSkel.js';
-import { recipeLibrary } from './recipeLibrary.js'
-import { saveLoadLocalStorage } from './saveLoadLocStorage.js';
-import './styles.css';
+import { HTMLSkeleton } from '../utils/createHTMLSkel.js';
+import { recipeLibrary } from '../recipeLibrary/recipeLibrary.js'
+import { saveLoadLocalStorage } from '../utils/saveLoadLocStorage.js';
+import '../styles.css';
 
 
 
@@ -82,7 +82,6 @@ export const selectedRecipes = {
             _selectedList.appendChild(selectedItem)
 
             let removeButton = document.createElement('button')
-            removeButton.textContent = 'x'
             removeButton.classList = 'remove-selected-recipe'
             removeButton.addEventListener('click', () => {
                 let temp = removeButton.parentElement
@@ -90,7 +89,11 @@ export const selectedRecipes = {
                 let elemIndex = this.selectedRecipes.findIndex((el) => {
                     return el.name == temp.textContent
                 })
-                this.selectedRecipes.splice(elemIndex)
+                console.log(elemIndex)
+                this.selectedRecipes.splice(elemIndex, 1)
+                console.log(this.selectedRecipes)
+                saveLoadLocalStorage.saveTo(this.selectedRecipes, 'JSONselectedRecipes')
+
                 temp.remove()
             })
 

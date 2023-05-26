@@ -5,12 +5,20 @@ module.exports = {
     mode: 'development',
     entry: {
         index: './src/index.js',
-        saveLoadLocStorage: './src/saveLoadLocStorage.js',
-        recipeClass: './src/recipeClass.js',
-        recipeLibrary: './src/recipeLibrary.js',
-        selectedRecipes: './src/selectedRecipes.js',
-        groceryList: './src/groceryList.js',
-        createHTMLSkeleton: './src/createHTMLSkel.js'
+
+        saveLoadLocStorage: './src/utils/saveLoadLocStorage.js',
+        recipeClass: './src/utils/recipeClass.js',
+        createHTMLSkeleton: './src/utils/createHTMLSkel.js',
+        groupBy: './src/utils/groupBy.js',
+
+        recipeLibrary: './src/recipeLibrary/recipeLibrary.js',
+        recipeHTML: './src/recipeLibrary/recipeHTML.js',
+        recipeForm: './src/recipeLibrary/recipeForm.js',
+
+        selectedRecipes: './src/selectedRecipes/selectedRecipes.js',
+
+        groceryList: './src/groceryList/groceryList.js',
+        groceryItem: './src/groceryList/groceryItem.js'
     },
     devtool: 'inline-source-map',
     devServer: {

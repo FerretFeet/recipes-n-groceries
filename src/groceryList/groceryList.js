@@ -1,26 +1,12 @@
-import { HTMLSkeleton } from './createHTMLSkel';
-import { selectedRecipes } from './selectedRecipes';
-import './styles.css';
+import { HTMLSkeleton } from '../utils/createHTMLSkel';
+import { selectedRecipes } from '../selectedRecipes/selectedRecipes';
+import '../styles.css';
+import { groupBy } from '../utils/groupBy';
+import { groceryItem } from './groceryItem';
 
 
-const groupBy = (items, key) => items.reduce(
-    (result, item) => ({
-        ...result,
-        [item[key]]: [
-            ...(result[item[key]] || []),
-            item,
-        ],
-    }),
-    {},
-)
 
-class groceryItem {
-    constructor(ingredient, amount, measure) {
-        this.ingredient = ingredient;
-        this.amount = amount
-        this.measure = measure
-    }
-}
+
 
 
  export const groceryList = {
