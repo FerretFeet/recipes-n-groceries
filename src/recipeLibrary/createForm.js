@@ -2,15 +2,20 @@
 //import msr units
 
 
+
 export const createForm = {
     //create form, input for Name, Ingredients([ingredient, amount, msrmnt]), Steps ([1,2,3])
     recipeForm: document.createElement('form'),
     ingrList: document.createElement('ul'),
     stepsList: document.createElement('ul'),
+    ingrInputCounter: 1,
+
 
 
 
     createForm: function() {
+        console.log(this.ingrInputCounter)
+        console.log('###################')
         this.recipeForm.appendChild(this.addName())
 
         this.ingrCont = document.createElement('div')
@@ -43,6 +48,8 @@ export const createForm = {
     },
 
     appendIngr: function(container) {
+        console.log(container)
+        console.log(this.ingrList)
     container.appendChild(this.ingrList)
         this.ingrList.appendChild(this.addIngredients())
     container.appendChild(this.dupInpBtn(this.addIngredients(), this.ingrList))   
@@ -61,6 +68,7 @@ export const createForm = {
         return div
     },
 
+
     addIngredients: function() {
         let li = document.createElement('li')
 
@@ -77,6 +85,7 @@ export const createForm = {
 
         let ingrMsr = this.createIngrMsrInput()
         li.appendChild(ingrMsr)
+        this.ingrInputCounter++
 
         return li  
     },
@@ -121,11 +130,11 @@ export const createForm = {
     },
  
 
-    createIngrValInput: () => {
+    createIngrValInput: function() {
         let _ingrInput = document.createElement('input')
         _ingrInput.setAttribute('type', 'number')
         _ingrInput.classlist = 'inputIngredient inputVal'
-        _ingrInput.setAttribute('name', 'ingredients')
+        _ingrInput.setAttribute('name', `ingredients[${this.ingrInputCounter}][val]`)
         _ingrInput.setAttribute('maxValue', '99')
         _ingrInput.setAttribute('minValue', '1')
         _ingrInput.required = true
@@ -147,7 +156,7 @@ export const createForm = {
         let _ingrInput = document.createElement('select')
         _ingrInput.classlist = 'inputIngredient inputName'
 
-        _ingrInput.setAttribute('name', 'ingredients')
+        _ingrInput.setAttribute('name', `ingredients[${this.ingrInputCounter}][val]`)
         _ingrInput.required = true
         console.log(this)
         _ingrInput.appendChild(this.createOption('eggs'))
@@ -160,7 +169,7 @@ export const createForm = {
     createIngrMsrInput: function() {
         let _ingrInput = document.createElement('select')
         _ingrInput.classlist = 'inputIngredient inputMsr'
-        _ingrInput.setAttribute('name', 'ingredients')
+        _ingrInput.setAttribute('name', `ingredients[${this.ingrInputCounter}][val]`)
         _ingrInput.required = true
 
         
@@ -179,6 +188,7 @@ export const createForm = {
             console.log(dupInp)
             //counter to change name of inputs?
             //need change name of inputs anyway
+            let x = dupInp
             
             inpCont.appendChild(dupInp)
         })
@@ -189,7 +199,7 @@ export const createForm = {
     
     createStepsInput: () => {
         let _inputStep = document.createElement('textarea')
-        _inputStep.setAttribute('name', 'steps')
+        _inputStep.setAttribute('name', 'steps[]')
         _inputStep.setAttribute('class', 'steps')
         _inputStep.setAttribute('cols', '30')
         _inputStep.setAttribute('rows', '10')

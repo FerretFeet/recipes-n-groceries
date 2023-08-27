@@ -7,6 +7,12 @@ import { recipeLibrary } from './recipeLibrary/recipeLibrary';
 import { selectedRecipes } from './selectedRecipes/selectedRecipes';
 import { groceryList } from './groceryList/groceryList';
 
+let x = async function() {
+    let response = await fetch('https://api.nal.usda.gov/fdc/v1/foods/search?api_key=DEMO_KEY&query=Eggs', {mode: 'cors'})
+    let foodData = await response.json();
+    console.log(foodData.foods[0].foodNutrients)
+}
+
 
 
 function onStart() {
